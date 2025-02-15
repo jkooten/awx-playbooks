@@ -22,7 +22,7 @@
 
   tasks:
    - name: Backup asr9k cores
-     cisco.ios.ios_command:
+     cisco.iosxr.iosxr_command:
        commands: show running-config
      register: config
 
