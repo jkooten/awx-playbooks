@@ -18,26 +18,7 @@
       state: directory
   run_once: true
 
-- hosts: cbr8 
-
-  tasks:
-   - name: Backup cBR-8
-     cisco.ios.ios_command:
-       commands: show running-config
-     register: config
-
-   - name: Create Cisco backup dir
-     file:
-      path: ~/workspaces/ansible-mac/data/{{hostvars.localhost.DTG}}/cisco/
-      state: directory
-
-   - name: Save output to ~/workspaces/ansible-mac/data/cisco/
-     copy:
-       content: "{{config.stdout[0]}}"
-       dest: "~/workspaces/ansible-mac/data/{{hostvars.localhost.DTG}}/cisco/{{inventory_hostname}}-{{hostvars.localhost.DTG}}-config.txt"
-
-
-- hosts: asr9k
+- hosts: core
 
   tasks:
    - name: Backup asr9k cores
@@ -49,93 +30,6 @@
      copy:
        content: "{{config.stdout[0]}}"
        dest: "~/workspaces/ansible-mac/data/{{hostvars.localhost.DTG}}/cisco/{{inventory_hostname}}-{{hostvars.localhost.DTG}}-config.txt"
-
-
-- hosts: c100g
-
-  tasks:
-   - name: Backup C100G
-     community.network.casa_command:
-       commands: show running-config
-     register: config
-
-   - name: Create Casa backup dir
-     file:
-      path: ~/workspaces/ansible-mac/data/{{hostvars.localhost.DTG}}/casa/
-      state: directory
-
-   - name: Save output to ~/workspaces/ansible-mac/data/
-     copy:
-       content: "{{config.stdout[0]}}"
-       dest: "~/workspaces/ansible-mac/data/{{hostvars.localhost.DTG}}/casa/{{inventory_hostname}}-{{hostvars.localhost.DTG}}-config.txt"
-
-
-#- hosts: e6000
-#
-#  tasks:
-#   - name: Backup E6000
-#     arista.eos.eos_config:
-#      commands: show run verbose
-#     register: config
-
-#   - name: Save output to ~/workspaces/ansible/data/
-#     copy:
-#       content: "{{config.stdout[0]}}"
-#       dest: "~/workspaces/ansible/data/{{hostvars.localhost.DTG}}/{{inventory_hostname}}-{{hostvars.localhost.DTG}}-config.txt"
-
-#- hosts: cbr8 
-#
-#  vars:
-#    command_list:
-#    # - show etherchannel summary 
-#    # - show cdp neigh 
-#    # - sh switch stack-ports
-#    # - sh switch 
-#      - show environment all
-#    # - show ip ospf int brief 
-#    # - show ip ospf neigh 
-#    # - show cdp neighbors detail
-#      - show version 
-#    # - show license usage 
-#    # - show clock
-#    # - show users
-#    # - show boot
-#    # - show int status | inc connected
-#    # - show arp
-#    # - show ip interface brief | exc admin
-#
-#  tasks:
-#   - name: Run the SHOW commands and save output 
-#     ios_command:
-#       commands: "{{ command_list }}"
-#     register: showoutput
-#
-#   - name: "Put all the files together into one nice text file"
-#     template: 
-#       src: template.j2 
-#       dest: "~/workspaces/ansible/data/{{hostvars.localhost.DTG}}/{{ inventory_hostname }}-{{hostvars.localhost.DTG}}-showoutput.txt"
-#
-#- hosts: SWITCHES
-#
-#  tasks:
-#   - name: Backup Catalyst Switch 
-#
-#     ios_config:
-#       backup: yes
-#       backup_options:
-#         filename: "{{inventory_hostname}}-{{hostvars.localhost.DTG}}-config.txt"
-#         dir_path: /home/jvkooten/workspaces/ansible/data/{{hostvars.localhost.DTG}}
-#
-#- hosts: NXOS
-#
-#  tasks:
-#   - name: Backup NEXUS with cli_command
-#     cli_command:
-#       command: show run | be ver
-#     register: config 
-#
-#   - name: Save output to ~/workspaces/ansible/data/
-#     copy:
 #       content: "{{config.stdout}}"
 #       dest: "~/workspaces/ansible/data/{{hostvars.localhost.DTG}}/{{inventory_hostname}}-{{hostvars.localhost.DTG}}-config.txt"
 
