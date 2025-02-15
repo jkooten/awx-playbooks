@@ -14,7 +14,7 @@
 
    - name: Create Directory {{hostvars.localhost.DTG}}
      file:
-      path: ~/workspaces/ansible-mac/data/{{hostvars.localhost.DTG}}
+      path: ~/workspaces/data/{{hostvars.localhost.DTG}}
       state: directory
   run_once: true
 
@@ -26,10 +26,10 @@
        commands: show running-config
      register: config
 
-   - name: Save output to ~/workspaces/ansible-mac/data/cisco/
+   - name: Save output to ~/workspaces  /data/cisco/
      copy:
        content: "{{config.stdout[0]}}"
-       dest: "~/workspaces/ansible-mac/data/{{hostvars.localhost.DTG}}/cisco/{{inventory_hostname}}-{{hostvars.localhost.DTG}}-config.txt"
+       dest: "~/workspaces/data/{{hostvars.localhost.DTG}}/cisco/{{inventory_hostname}}-{{hostvars.localhost.DTG}}-config.txt"
 #       content: "{{config.stdout}}"
-#       dest: "~/workspaces/ansible/data/{{hostvars.localhost.DTG}}/{{inventory_hostname}}-{{hostvars.localhost.DTG}}-config.txt"
+#       dest: "~/workspaces/data/{{hostvars.localhost.DTG}}/{{inventory_hostname}}-{{hostvars.localhost.DTG}}-config.txt"
 
